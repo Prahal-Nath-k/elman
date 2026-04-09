@@ -148,7 +148,7 @@ export default function LoginPage() {
                         <span style={{ color: '#1a2250', fontWeight: 600, fontSize: '0.85em', letterSpacing: '0.05em' }}>FURNACE PRIVATE LIMITED</span>
                     </h1>
                     <p className="text-sm text-surface-700/60 mt-1.5 font-medium tracking-wide uppercase">
-                        Enterprise Resource Planner
+                        Enterprise Resource Planning
                     </p>
                 </div>
 
