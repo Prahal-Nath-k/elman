@@ -349,7 +349,7 @@ export default function PurchaseIndentsPage({ selectedProjectId }) {
     async function fetchIntents() {
         setLoading(true)
         let query = supabase
-            .from('purchase_intent_headers')
+            .from('purchase_indent_headers')
             .select(`
                 id, project_id, intent_type, dept, raised_by, status,
                 approved_manager, approved_store, approved_purchase, approved_md,
@@ -366,7 +366,7 @@ export default function PurchaseIndentsPage({ selectedProjectId }) {
         if (!error && headers) {
             if (headers.length > 0) {
                 const { data: items } = await supabase
-                    .from('purchase_intent_items')
+                    .from('purchase_indent_items')
                     .select('*')
                     .in('header_id', headers.map(h => h.id))
                 const enriched = headers.map(h => ({
@@ -436,7 +436,7 @@ export default function PurchaseIndentsPage({ selectedProjectId }) {
         }
 
         const { error } = await supabase
-            .from('purchase_intent_headers')
+            .from('purchase_indent_headers')
             .update(updates)
             .eq('id', row.id)
 
@@ -479,7 +479,7 @@ export default function PurchaseIndentsPage({ selectedProjectId }) {
         }
 
         const { error } = await supabase
-            .from('purchase_intent_headers')
+            .from('purchase_indent_headers')
             .update(updates)
             .eq('id', row.id)
 
@@ -508,7 +508,7 @@ export default function PurchaseIndentsPage({ selectedProjectId }) {
         }
 
         const { error } = await supabase
-            .from('purchase_intent_headers')
+            .from('purchase_indent_headers')
             .update(updates)
             .eq('id', row.id)
 
@@ -527,7 +527,7 @@ export default function PurchaseIndentsPage({ selectedProjectId }) {
             return
         }
         setDeletingIntentId(row.id)
-        const { error } = await supabase.from('purchase_intent_headers').delete().eq('id', row.id)
+        const { error } = await supabase.from('purchase_indent_headers').delete().eq('id', row.id)
         if (!error) setData(prev => prev.filter(r => r.id !== row.id))
         setDeletingIntentId(null)
     }

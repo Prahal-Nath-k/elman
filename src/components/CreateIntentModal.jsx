@@ -169,7 +169,7 @@ export default function CreateIntentModal({ open, onClose, onSuccess, selectedPr
             setSubmitting(true)
 
             // Insert ONE header
-            const { data: headerData, error: headerError } = await supabase.from('purchase_intent_headers').insert({
+            const { data: headerData, error: headerError } = await supabase.from('purchase_indent_headers').insert({
                 project_id: projectId,
                 intent_type: 'Project Stock',
                 raised_by: raisedBy.trim() || null,
@@ -190,7 +190,7 @@ export default function CreateIntentModal({ open, onClose, onSuccess, selectedPr
                 model_number: p.model_number || null
             }))
 
-            const { error: itemsError } = await supabase.from('purchase_intent_items').insert(inserts)
+            const { error: itemsError } = await supabase.from('purchase_indent_items').insert(inserts)
             if (itemsError) { setError(itemsError.message); setSubmitting(false); return }
         } else {
             // General stock
@@ -202,7 +202,7 @@ export default function CreateIntentModal({ open, onClose, onSuccess, selectedPr
 
             setSubmitting(true)
 
-            const { data: headerData, error: headerError } = await supabase.from('purchase_intent_headers').insert({
+            const { data: headerData, error: headerError } = await supabase.from('purchase_indent_headers').insert({
                 project_id: null,
                 intent_type: 'General Stock',
                 raised_by: generalForm.raised_by.trim() || null,
@@ -214,7 +214,7 @@ export default function CreateIntentModal({ open, onClose, onSuccess, selectedPr
 
             const headerId = headerData.id
 
-            const { error: itemsError } = await supabase.from('purchase_intent_items').insert({
+            const { error: itemsError } = await supabase.from('purchase_indent_items').insert({
                 header_id: headerId,
                 product_name: generalForm.description.trim(),
                 quantity: Number(generalForm.quantity_required),

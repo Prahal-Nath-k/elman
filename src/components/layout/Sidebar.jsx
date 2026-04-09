@@ -71,7 +71,7 @@ export default function Sidebar({ open, setOpen, selectedProjectId, setSelectedP
 
     async function fetchPendingApprovals() {
         let query = supabase
-            .from('purchase_intent_headers')
+            .from('purchase_indent_headers')
             .select('id, approved_manager, approved_store, approved_purchase, approved_md, status')
             .neq('status', 'Delivered')
 

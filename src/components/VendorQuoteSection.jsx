@@ -20,8 +20,8 @@ export default function VendorQuoteSection({ onSuccess, selectedProjectId }) {
     async function fetchIntents() {
         setLoadingIntents(true)
         let query = supabase
-            .from('purchase_intent_headers')
-            .select('id, dept, status, raised_by, created_at, purchase_intent_items(product_name, quantity, uom)')
+            .from('purchase_indent_headers')
+            .select('id, dept, status, raised_by, created_at, purchase_indent_items(product_name, quantity, uom)')
             .order('created_at', { ascending: false })
         
         if (selectedProjectId) {
@@ -101,7 +101,7 @@ export default function VendorQuoteSection({ onSuccess, selectedProjectId }) {
         // Audit log
         const intentInfo = indents.find(i => i.id === selectedIntent)
         const vendorNames = quotes.map(q => q.vendor_name.trim()).filter(Boolean).join(', ')
-        const firstItem = intentInfo?.purchase_intent_items?.[0]
+        const firstItem = intentInfo?.purchase_indent_items?.[0]
         await supabase.from('activity_logs').insert({
             user_name: user?.email || 'Unknown',
             user_role: 'manager',
@@ -159,7 +159,7 @@ export default function VendorQuoteSection({ onSuccess, selectedProjectId }) {
                     >
                         <option value="">{loadingIntents ? 'Loading indents...' : indents.length === 0 ? 'No indents found' : 'Select an indent...'}</option>
                         {indents.map((intent) => {
-                            const items = intent.purchase_intent_items || []
+                            const items = intent.purchase_indent_items || []
                             const firstItem = items[0]
                             const label = firstItem
                                 ? `[${intent.dept || 'No Dept'}] ${firstItem.product_name}${items.length > 1 ? ` +${items.length - 1} more` : ''} — ${intent.status}`
@@ -180,7 +180,7 @@ export default function VendorQuoteSection({ onSuccess, selectedProjectId }) {
                             <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[10px] font-bold">{selectedIntentData.status}</span>
                             <span className="text-surface-400">• Raised by {selectedIntentData.raised_by || 'Unknown'}</span>
                         </div>
-                        {(selectedIntentData.purchase_intent_items || []).map((item, i) => (
+                        {(selectedIntentData.purchase_indent_items || []).map((item, i) => (
                             <div key={i} className="text-surface-600">
                                 <span className="font-mono mr-1 text-surface-400">{i + 1}.</span>
                                 <span className="font-medium">{item.product_name}</span>

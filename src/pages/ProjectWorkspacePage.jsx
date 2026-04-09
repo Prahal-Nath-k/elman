@@ -144,17 +144,17 @@ export default function ProjectWorkspacePage() {
             return
         }
         setDeleting(true)
-        // Cascading delete: specs, designs, purchase_intent_items via headers, then headers, then project
+        // Cascading delete: specs, designs, purchase_indent_items via headers, then headers, then project
         // Get all indent headers for this project
         const { data: headers } = await supabase
-            .from('purchase_intent_headers')
+            .from('purchase_indent_headers')
             .select('id')
             .eq('project_id', projectId)
 
         if (headers?.length > 0) {
             const headerIds = headers.map(h => h.id)
-            await supabase.from('purchase_intent_items').delete().in('header_id', headerIds)
-            await supabase.from('purchase_intent_headers').delete().in('id', headerIds)
+            await supabase.from('purchase_indent_items').delete().in('header_id', headerIds)
+            await supabase.from('purchase_indent_headers').delete().in('id', headerIds)
         }
 
         await supabase.from('project_specs').delete().eq('project_id', projectId)
